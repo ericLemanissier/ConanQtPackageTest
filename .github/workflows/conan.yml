@@ -10,9 +10,10 @@ jobs:
     runs-on:  ubuntu-latest
     steps:
       - name: Install system packages
-        run: sudo apt-get install python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
+        run: sudo apt-get update && apt-get -qq install -y --no-install-recommends python3-pip python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
       - name: install conan
         run: |
+          pip3 install wheel
           pip3 install --upgrade setuptools 
           pip3 install conan
           conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
