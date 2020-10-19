@@ -13,7 +13,7 @@ jobs:
       - name: install conan
         run: pip3 install conan --ignore-installed 
       - uses: actions/checkout@v2
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           repository: Knitschi/CIBuildConfigurations
           path: profiles
@@ -32,7 +32,7 @@ jobs:
     runs-on:  windows-latest
     steps:
       - uses: actions/checkout@v2
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           repository: Knitschi/CIBuildConfigurations
           path: profiles
