@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
   linux:
     strategy:
+      fail-fast: false
       matrix:
         profile: [Clang-shared-debug, Clang-static-release, Gcc-shared-debug]
         recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
@@ -11,7 +12,7 @@ jobs:
       - name: Install system packages
         run: sudo apt-get install python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
       - name: install conan
-        run: pip3 install conan --ignore-installed 
+        run: pip3 install conan 
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
@@ -26,11 +27,14 @@ jobs:
   
   Windows:
     strategy:
+      fail-fast: false
       matrix:
         profile: [VS2019-shared-debug, VS2019-static-release]
         recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
     runs-on:  windows-latest
     steps:
+      - name: install
+        run: pip3 install conan
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
