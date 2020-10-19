@@ -7,7 +7,7 @@ jobs:
       matrix:
         profile: [Clang-shared-debug, Clang-static-release, Gcc-shared-debug]
         recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
-    runs-on:  ubuntu-latest
+    runs-on:  ubuntu-20.04
     steps:
       - name: Install system packages
         run: |
