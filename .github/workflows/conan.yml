@@ -12,7 +12,10 @@ jobs:
       - name: Install system packages
         run: sudo apt-get install python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
       - name: install conan
-        run: pip3 install conan 
+        run: |
+          pip3 install --upgrade setuptools 
+          pip3 install conan
+          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
@@ -34,7 +37,9 @@ jobs:
     runs-on:  windows-latest
     steps:
       - name: install
-        run: pip3 install conan
+        run: |
+          pip3 install conan
+          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
