@@ -23,11 +23,13 @@ jobs:
           CONAN_SYSREQUIRES_SUDO: 0
         run: |
           conan install Sources/QtTestConsumer/conanfile_Qt${{ matrix.recipe }}.txt -pr profiles/ConanProfile-${{ matrix.profile }} --build missing
+  
   Windows:
-    runs-on:  windows-latest
+    strategy:
       matrix:
         profile: [VS2019-shared-debug, VS2019-static-release]
         recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
+    runs-on:  windows-latest
     steps:
       - uses: actions/checkout@v2
         uses: actions/checkout@v2
