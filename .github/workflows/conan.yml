@@ -14,11 +14,7 @@ jobs:
           sudo apt-get update
           sudo apt-get -qq install -y --no-install-recommends python3-pip python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
       - name: install conan
-        run: |
-          pip3 install wheel
-          pip3 install --upgrade setuptools 
-          pip3 install conan
-          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
+        run: pip3 install conan
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
@@ -29,6 +25,7 @@ jobs:
           CONAN_SYSREQUIRES_MODE: enabled
           CONAN_SYSREQUIRES_SUDO: 0
         run: |
+          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
           conan install Sources/QtTestConsumer/conanfile_Qt${{ matrix.recipe }}.txt -pr profiles/ConanProfile-${{ matrix.profile }} --build missing
   
   Windows:
@@ -40,9 +37,7 @@ jobs:
     runs-on:  windows-latest
     steps:
       - name: install
-        run: |
-          pip3 install conan
-          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
+        run: pip3 install conan
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
@@ -50,4 +45,5 @@ jobs:
           path: profiles
       - name: run
         run: |
+          conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan 
           conan install Sources/QtTestConsumer/conanfile_Qt${{ matrix.recipe }}.txt -pr profiles/ConanProfile-${{ matrix.profile }} --build missing
