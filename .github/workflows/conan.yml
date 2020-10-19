@@ -1,0 +1,39 @@
+on: [push, pull_request]
+
+jobs:
+  linux:
+    strategy:
+      matrix:
+        profile: [Clang-shared-debug, Clang-static-release, Gcc-shared-debug]
+        recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Install system packages
+        run: sudo apt-get install python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
+      - name: install conan
+        run: pip3 install conan --ignore-installed 
+      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
+        with:
+          repository: Knitschi/CIBuildConfigurations
+          path: profiles
+      - name: run
+        env:
+          CONAN_SYSREQUIRES_MODE: enabled
+          CONAN_SYSREQUIRES_SUDO: 0
+        run: |
+          conan install Sources/QtTestConsumer/conanfile_Qt${{ matrix.recipe }}.txt -pr profiles/ConanProfile-${{ matrix.profile }} --build missing
+  Windows:
+    runs-on:  windows-latest
+      matrix:
+        profile: [VS2019-shared-debug, VS2019-static-release]
+        recipe: [5.15.1, 5.14.1, 5.13.2, 5.12.9]
+    steps:
+      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
+        with:
+          repository: Knitschi/CIBuildConfigurations
+          path: profiles
+      - name: run
+        run: |
+          conan install Sources/QtTestConsumer/conanfile_Qt${{ matrix.recipe }}.txt -pr profiles/ConanProfile-${{ matrix.profile }} --build missing
