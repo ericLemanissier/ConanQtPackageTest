@@ -13,6 +13,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -qq install -y --no-install-recommends python3-pip python3-setuptools graphviz clang-format-10 clang-10 clang-tidy-10 ninja-build m4 clang
+          pip3 install mako
       - name: install conan
         run: pip3 install conan
       - uses: actions/checkout@v2
